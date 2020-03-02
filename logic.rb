@@ -1,35 +1,28 @@
-def random_N(num)
-  rand(1..num)
-end
-
 def gen_question
-  n1= random_N(20)
-  n2= random_N(20)
+  n1= rand(1..20)
+  n2= rand(1..20)
   question= "#{n1} + #{n2}"
   answer= n1 + n2
   return question, answer
 end
 
-def evaluate(ans1, ans2)
-  if ans1 == ans2
-    puts 'Correct'
-    return 0
+def evaluate(p, check)
+  if check
+    puts "#{p[p[0]].name}: Yes! You are correct."
   else
-    puts 'Wrong'
-    return -1
+    puts "#{p[p[0]].name}: Seriously? No!"
+    p[p[0]].score -= 1
   end
 end
 
-def endTurn(p1, p2, turn)
-  puts "P1: #{p1}/3 vs P2: #{p2}/3"
-  if p1 != 0 && p2 != 0
+def endTurn(p)
+  puts "P1: #{p[1].score}/3 vs P2: #{p[2].score}/3"
+  if p[1].score != 0 && p[2].score != 0
     puts "----- NEW TURN -----"
-    if turn == 1
-      return 2
-    else
-      return 1
-    end
+    p[0] == 1 ? p[0] = 2 : p[0] = 1
   else
+    p[0] == 2 ? winner = 1 : winner = 2
+    puts "#{p[winner].name} wins with score of #{p[winner].score}/3"
     puts "----- GAME OVER -----"
     puts "Good bye!"
   end
